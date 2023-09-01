@@ -1,0 +1,115 @@
+$base-color: rgb(46, 46, 83);
+$tilted-color: rgb(90, 90, 150);
+$dark-tilted-color: rgb(50, 50, 109);
+$btn-color: rgb(0, 163, 14);
+$bar-color: rgb(134, 121, 255);
+$console-color: rgb(255, 252, 222);
+$checks-color: rgb(213, 247, 204);
+
+html, body, #root{
+    height: 100%;
+    margin: 0px;
+}
+
+div, button{
+    margin: 0px;
+    padding: 0px;
+}
+
+#main{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $base-color;
+}
+
+#command{
+    width: 100%;
+    height: 20%;
+    color: white;
+    padding: 20px;
+}
+
+#content{
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+}
+
+#code{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#code-header{
+    height: 50px;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: $dark-tilted-color;
+}
+
+#code-execute{
+    background-color: $btn-color;
+    color: whitesmoke;
+    width: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+#code-content-div{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#code-content-sidebar{
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: $bar-color;
+    color: white;
+    font-size: 1em;
+}
+
+#code-content-sidebar > div{
+    height: 19px;
+}
+
+#code-content{
+    width: 100%;
+    height: 100%;
+    background-color: $tilted-color;
+    color: white;
+    resize: none;
+    font-size: 1.2em;
+}
+
+#console{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: $console-color;
+}
+
+#console-header{
+    height: 50px;
+    background-color: whitesmoke;
+}
+
+#console-content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#checks{
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: $checks-color;
+}
