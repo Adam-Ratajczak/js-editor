@@ -5,10 +5,12 @@ const lines_of_code = 20
 
 let Level = {
   command: "You have three variables given: a, b and c. Calculate 10th element of the fibonacci sequence where a should be a result. Print a result in the console.",
-  code:"// write your code here\nlet a = 1;\nlet b = 0;\nlet c = 0;\n",
+  code:"let a = 1;\nlet b = 0;\nlet c = 0;\n// write your code here\n",
+  protected_lines: 3,
+  vars: "return [a, b, c];",
   checks: [
-    {msg: "Is 'a' variable valid?", eval: "a == 89"},
-    {msg: "Is value printed in the console?", eval: "consoleLogs.Length == 1 && consoleLogs[0].value == \"89\""}
+    {msg: "Is 'a' variable valid?", eval: "return res[0] == 89"},
+    {msg: "Is value printed in the console?", eval: "for(let cmd of consoleLogs){if(cmd.value == res[0]){ return true;}}\nreturn false;"}
   ],
   page_content: false
 }
@@ -29,13 +31,20 @@ function App() {
 
   function limitLines(e) {
     const str = document.getElementById("code-content").value
+    const cursor = document.getElementById("code-content").selectionStart
     let NumOfLines = 0
+    let ProtectedChars = 0;
 
     for(let c of str){
+      if(NumOfLines < CurrLevel.protected_lines){
+        ProtectedChars++
+      }
+      
       if(c == '\n'){
         NumOfLines++
       }
     }
+
 
     let keynum = 0
     if(window.event) {
@@ -49,6 +58,10 @@ function App() {
       if(NumOfLines >= lines_of_code) {
         e.preventDefault()
       }
+    }
+
+    if(cursor <= ProtectedChars && (keynum < 37 || keynum > 40)){
+      e.preventDefault()
     }
   }
 
@@ -91,13 +104,9 @@ function App() {
       consoleLogs.push({type: "debug", value: arguments[0].toString()});
     };
 
-    const foo = new Function(code + "\nreturn [a, b, c];")
+    const foo = new Function(code + "\n" + CurrLevel.vars)
 
     const res = foo()
-
-    const a = res[0]
-    const b = res[1]
-    const c = res[2]
 
     console.log = originalConsoleLog;
     console.error = originalConsoleError;
@@ -120,14 +129,11 @@ function App() {
 
     let check_arr = [];
     for (let check of CurrLevel.checks) {
-      // Add checks to ensure that 'a', 'b', 'c', and consoleLogs[0] are defined
-      if (a !== undefined && b !== undefined && c !== undefined) {
-        const bar = new Function("a", "b", "c", "consoleLogs", "return " + check.eval + ";");
-        const result = bar(a, b, c, consoleLogs);
+      const bar = new Function("res", "consoleLogs", check.eval);
+      const result = bar(res, consoleLogs);
     
-        const divStyle = result ? { backgroundColor: "#00FF0088" } : { backgroundColor: "#FF000088" };
-        check_arr.push(<div style={divStyle}>{check.msg}</div>);
-      }
+      const divStyle = result ? { backgroundColor: "#00FF0088" } : { backgroundColor: "#FF000088" };
+      check_arr.push(<div style={divStyle}>{check.msg}</div>);
     }
 
     SetChecks(check_arr)
