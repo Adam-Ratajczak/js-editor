@@ -83,6 +83,11 @@ function App() {
   }
 
   function ChangeLevel(id){
+    let id_in_range = Math.max(0, Math.min(id, Levels.length - 1))
+    if(document.getElementById("page-input")){
+      document.getElementById("page-input").value = id_in_range + 1
+    }
+
     if(id < 0 || id >= Levels.length){
       return
     }
@@ -170,11 +175,17 @@ function App() {
     SetConsoleEntry(arr)
   }
 
+  function triggerInput(ev){
+    if (ev.key === 'Enter') {
+      ChangeLevel(document.getElementById("page-input").value - 1)
+    }
+  }
+
   return (
     <div id="main">
       <div id="page-controls">
         <button id="prev" style={{backgroundColor: CurrLevelId == 0 ? "silver" : "red"}} onClick={(ev) => ChangeLevel(CurrLevelId - 1)}>Previous page</button>
-        <div>Page {CurrLevelId + 1} of {Levels.length}</div>
+        <div>Page <input type="number" id="page-input" onKeyDown={(ev) => triggerInput(ev)}/> of {Levels.length}</div>
         <button id="next" style={{backgroundColor: (CurrLevelId == Levels.length - 1) ? "silver" : "green"}} onClick={(ev) => ChangeLevel(CurrLevelId + 1)}>Next page</button>
       </div>
       <div id="command">
