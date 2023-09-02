@@ -3,22 +3,47 @@ import './App.scss';
 
 const lines_of_code = 20
 
-let Level = {
-  command: "You have three variables given: a, b and c. Calculate 10th element of the fibonacci sequence where a should be a result. Print a result in the console.",
-  code:"let a = 1;\nlet b = 0;\nlet c = 0;\n// write your code here\n",
-  protected_lines: 3,
-  vars: "return [a, b, c];",
-  checks: [
-    {msg: "Is 'a' variable valid?", eval: "return res[0] == 89"},
-    {msg: "Is value printed in the console?", eval: "for(let cmd of consoleLogs){if(cmd.value == res[0]){ return true;}}\nreturn false;"}
-  ],
-  page_content: false
-}
+const Levels = [
+  {
+    command: "You have three variables given: a, b and c. Calculate 10th element of the fibonacci sequence where a should be a result. Print a result in the console.",
+    code:"let a = 1;\nlet b = 0;\nlet c = 0;\n// write your code here\n",
+    protected_lines: 3,
+    vars: "return [a, b, c];",
+    checks: [
+      {msg: "Is 'a' variable valid?", eval: "return res[0] == 89"},
+      {msg: "Is value printed in the console?", eval: "for(let cmd of consoleLogs){if(cmd.value == res[0]){ return true;}}\nreturn false;"}
+    ],
+    page_content: false
+  },
+  {
+    command: "You have three variables given: a, b and c. Calculate 10th element of the fibonacci sequence where a should be a result. Print a result in the console.",
+    code:"let a = 1;\nlet b = 0;\nlet c = 0;\n// write your code here\n",
+    protected_lines: 3,
+    vars: "return [a, b, c];",
+    checks: [
+      {msg: "Is 'a' variable valid?", eval: "return res[0] == 89"},
+      {msg: "Is value printed in the console?", eval: "for(let cmd of consoleLogs){if(cmd.value == res[0]){ return true;}}\nreturn false;"}
+    ],
+    page_content: (<div id="sample-page"><p>bajo jajo</p></div>)
+  },
+  {
+    command: "You have three variables given: a, b and c. Calculate 10th element of the fibonacci sequence where a should be a result. Print a result in the console.",
+    code:"let a = 1;\nlet b = 0;\nlet c = 0;\n// write your code here\n",
+    protected_lines: 3,
+    vars: "return [a, b, c];",
+    checks: [
+      {msg: "Is 'b' variable valid?", eval: "return res[0] == 89"},
+      {msg: "Is value printed in the console?", eval: "for(let cmd of consoleLogs){if(cmd.value == res[0]){ return true;}}\nreturn false;"}
+    ],
+    page_content: (<div id="sample-page"><p>bajo jajo</p></div>)
+  },
+]
 
 function App() {
   let line_div_arr = []
 
   const [CurrLevel, SetCurrLevel] = useState(0)
+  const [CurrLevelId, SetCurrLevelId] = useState(0)
 
   for(let i = 1; i <= lines_of_code; i++){
     line_div_arr.push((
@@ -65,16 +90,25 @@ function App() {
     }
   }
 
-  useState(()=>{
-    SetCurrLevel(Level)
+  function ChangeLevel(id){
+    if(id < 0 || id >= Levels.length){
+      return
+    }
+
+    SetCurrLevel(Levels[id])
+    SetCurrLevelId(id)
 
     let check_arr = []
 
-    for(let check of Level.checks){
+    for(let check of Levels[id].checks){
       check_arr.push((<div style={{backgroundColor: "#FFFFFF88"}}>{check.msg}</div>))
     }
 
     SetChecks(check_arr)
+  }
+
+  useState(()=>{
+    ChangeLevel(0)
   }, [1])
 
   function execute(e){
@@ -142,6 +176,11 @@ function App() {
 
   return (
     <div id="main">
+      <div id="page-controls">
+        <button id="prev" style={{backgroundColor: CurrLevelId == 0 ? "silver" : "red"}} onClick={(ev) => ChangeLevel(CurrLevelId - 1)}>Previous page</button>
+        <div>Page {CurrLevelId + 1} of {Levels.length}</div>
+        <button id="next" style={{backgroundColor: (CurrLevelId == Levels.length - 1) ? "silver" : "green"}} onClick={(ev) => ChangeLevel(CurrLevelId + 1)}>Next page</button>
+      </div>
       <div id="command">
         {CurrLevel.command}
       </div>

@@ -24,6 +24,34 @@ div, button{
     background-color: $base-color;
 }
 
+#page-controls{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: white;
+}
+
+button{
+    width: 150px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+#prev{
+    background-color: red;
+    color: white;
+}
+
+#next{
+    background-color: greenyellow;
+    color: white;
+}
+
 #command{
     width: 100%;
     height: 20%;
@@ -53,12 +81,6 @@ div, button{
 #code-execute{
     background-color: $btn-color;
     color: whitesmoke;
-    width: 100px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
 }
 
 #code-content-div{
@@ -94,6 +116,11 @@ div, button{
     display: flex;
     flex-direction: column;
     background-color: $console-color;
+}
+
+#sample-page{
+    width: 50%;
+    background-color: white;
 }
 
 #console-header{
