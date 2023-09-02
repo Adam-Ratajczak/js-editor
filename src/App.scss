@@ -72,7 +72,7 @@ button{
 }
 
 #code-header{
-    height: 50px;
+    height: 10%;
     display: flex;
     flex-direction: row-reverse;
     background-color: $dark-tilted-color;
@@ -84,7 +84,7 @@ button{
 }
 
 #code-content-div{
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: row;
 }
@@ -96,10 +96,11 @@ button{
     background-color: $bar-color;
     color: white;
     font-size: 1em;
+    overflow: hidden;
 }
 
 #code-content-sidebar > div{
-    height: 19px;
+    height: 18px;
 }
 
 #code-content{
